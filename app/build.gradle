@@ -1,0 +1,52 @@
+apply plugin: 'com.android.application'
+
+dependencies {
+    compile fileTree(dir: 'libs', include: ['*.jar'])
+    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
+        exclude group: 'com.android.support', module: 'support-annotations'
+    })
+    compile 'com.android.support:appcompat-v7:25.3.1'
+    compile 'com.android.support.constraint:constraint-layout:1.0.2'
+    testCompile 'junit:junit:4.12'
+
+    compile "com.android.support:multidex:1.0.1"
+    //若使用annotation需要单独引用,对于tinker的其他库都无需再引用
+    provided("com.tinkerpatch.tinker:tinker-android-anno:${TINKER_VERSION}") { changing = true }
+    compile("com.tinkerpatch.sdk:tinkerpatch-android-sdk:${TINKERPATCH_VERSION}") { changing = true }
+}
+
+android {
+    compileSdkVersion 25
+    buildToolsVersion "25.0.3"
+
+    signingConfigs {
+        debug {
+            storeFile rootProject.file("keystore/debug.keystore")
+        }
+    }
+
+    defaultConfig {
+        applicationId "org.micmource.overtime"
+        minSdkVersion 15
+        targetSdkVersion 25
+        versionCode 1
+        versionName "1.0"
+        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        multiDexEnabled true
+    }
+    buildTypes {
+        release {
+            minifyEnabled true
+            signingConfig signingConfigs.debug
+            proguardFiles getDefaultProguardFile('proguard-android.txt')
+        }
+        debug {
+            debuggable true
+            minifyEnabled false
+            signingConfig signingConfigs.debug
+        }
+    }
+}
+apply from: 'tinkerpatch.gradle'
+
+
