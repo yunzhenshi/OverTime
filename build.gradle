@@ -9,6 +9,8 @@ buildscript {
 
         //无需再单独引用tinker的其他库
         classpath "com.tinkerpatch.sdk:tinkerpatch-gradle-plugin:${TINKERPATCH_VERSION}"
+
+        classpath 'com.growingio.android:vds-gradle-plugin:0.9.104'
     }
 }
 

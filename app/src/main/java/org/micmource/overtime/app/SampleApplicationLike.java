@@ -33,6 +33,8 @@ import android.os.Build;
 import android.support.multidex.MultiDex;
 import android.util.Log;
 
+import com.growingio.android.sdk.collection.Configuration;
+import com.growingio.android.sdk.collection.GrowingIO;
 import com.tencent.tinker.anno.DefaultLifeCycle;
 import com.tencent.tinker.lib.listener.DefaultPatchListener;
 import com.tencent.tinker.lib.patch.UpgradePatch;
@@ -118,6 +120,14 @@ public class SampleApplicationLike extends DefaultApplicationLike {
     public void onCreate() {
         super.onCreate();
         initTinker();
+        initGrowingIO();
+    }
+
+    private void initGrowingIO() {
+        GrowingIO.startWithConfiguration(getApplication(), new Configuration()
+                .useID()
+                .trackAllFragments()
+                .setChannel("XXX应用商店"));
     }
 
     private void initTinker() {
